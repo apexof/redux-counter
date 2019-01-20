@@ -1,40 +1,46 @@
 import React, { Component } from "react";
-import { increment, decrement, reset } from "./actions/counterActions";
-import store from "./store/store";
+// import { connect } from "react-redux";
+// import { increment, decrement, reset } from "./actions/counterActions";
 
 class App extends Component {
-  componentDidMount() {
-    store.subscribe(() => this.forceUpdate());
-  }
-
+  state = {
+    step: 3
+  };
   increment = () => {
-    const amount = +this.refs.amount.value;
-    store.dispatch(increment(amount));
+    this.props.increment(this.state.step);
   };
 
   decrement = () => {
-    const amount = +this.refs.amount.value;
-    store.dispatch(decrement(amount));
+    this.props.decrement(this.state.step);
   };
-
-  reset = () => {
-    store.dispatch(reset());
+  handleChange = e => {
+    this.setState({
+      step: +e.target.value
+    });
   };
 
   render() {
-    const count = store.getState().count;
-
+    const { count, reset } = this.props;
     return (
       <div>
         <button onClick={this.decrement}>-</button>
         <span>{count}</span>
         <button onClick={this.increment}>+</button>
-        <button onClick={this.reset}>reset</button>
+        <button onClick={reset}>reset</button>
         <span>Step: </span>
-        <input type="text" defaultValue="3" ref="amount" />
+        <input
+          type="text"
+          defaultValue={this.state.step}
+          onChange={this.handleChange}
+        />
       </div>
     );
   }
 }
 
 export default App;
+
+// export default connect(
+//   state => state,
+//   { increment, decrement, reset }
+// )(App);
