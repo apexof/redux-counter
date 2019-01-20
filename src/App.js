@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-// import { connect } from "react-redux";
-// import { increment, decrement, reset } from "./actions/counterActions";
+import { connect } from "react-redux";
+import { increment, decrement, reset } from "./actions/counterActions";
 
 class App extends Component {
   state = {
@@ -38,9 +38,7 @@ class App extends Component {
   }
 }
 
-export default App;
-
-// export default connect(
-//   state => state,
-//   { increment, decrement, reset }
-// )(App);
+export default connect(
+  state => state,
+  { increment, decrement, reset }
+)(App);
